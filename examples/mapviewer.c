@@ -25,6 +25,7 @@
 
 #include "osm-gps-map.h"
 
+static int zoomstats;
 static OsmGpsMapSource_t opt_map_provider = OSM_GPS_MAP_SOURCE_OPENSTREETMAP;
 static gboolean opt_friendly_cache = FALSE;
 static gboolean opt_no_cache = FALSE;
@@ -111,13 +112,14 @@ on_zoom_in_clicked_event (GtkWidget *widget, gpointer user_data)
     OsmGpsMap *map = OSM_GPS_MAP(user_data);
     g_object_get(map, "zoom", &zoom, NULL);
     osm_gps_map_set_zoom(map, zoom+1);
+    zoomstats=zoom;
     return FALSE;
 }
 
 static gboolean
 on_zoom_out_clicked_event (GtkWidget *widget, gpointer user_data)
 {
-    int zoom;
+    int zoom=zoomstats;
     OsmGpsMap *map = OSM_GPS_MAP(user_data);
     g_object_get(map, "zoom", &zoom, NULL);
     osm_gps_map_set_zoom(map, zoom-1);
